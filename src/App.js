@@ -1,14 +1,11 @@
 import './App.css';
 import { Titulo } from './Components/styles/Textos';
-import { Menu, Container } from './Components/styles/Containers';
-import MenuBar from './Components/navbar/Menu';
-import Pesquisa from './Components/pesquisa/Pesquisa';
-import CardOfertas from './Components/maisBuscados/Ofertas';
+import { Route, Routes } from 'react-router-dom';
 import ResponsiveAppBar from './Components/navbar/Menu';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
-import CardOfertas2 from './Components/maisBuscados/CardPlaceHolder';
 import VerticalTabs from './Components/navbar/Tabs';
+import CadastroUser from './Components/cadastro/cadastroUser';
 
 const darkTheme = createTheme({
   palette: {
@@ -20,12 +17,12 @@ const darkTheme = createTheme({
 function App() {
   return (
     <ThemeProvider theme={darkTheme}>
-    <div className="App">
-     <ResponsiveAppBar/>
-     
-    <header className="App-header"> 
-        <VerticalTabs/>
-    </header>      
+    <ResponsiveAppBar/>
+    <div className="App-header">
+    <Routes>
+        <Route path='/' element={<VerticalTabs/>}/>
+        <Route path='/cadastroUser' element={<CadastroUser/>}/>        
+    </Routes> 
     </div>
     </ThemeProvider>
   );

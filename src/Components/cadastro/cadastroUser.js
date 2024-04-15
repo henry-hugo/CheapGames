@@ -12,7 +12,16 @@ import FormControl from '@mui/material/FormControl';
 import TextField from '@mui/material/TextField';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
-import { Titulo } from '../styles/Textos';
+import { Texto, Titulo } from '../styles/Textos';
+import Button from '@mui/material/Button';
+import SendIcon from '@mui/icons-material/Send';
+import Link from '@mui/material/Link';
+
+import dayjs from 'dayjs';
+import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { DateField } from '@mui/x-date-pickers/DateField';
 
 function CadastroUser() {
     const [showPassword, setShowPassword] = React.useState(false);
@@ -23,38 +32,52 @@ function CadastroUser() {
       event.preventDefault();
     };
 
+    const [value, setValue] = React.useState(dayjs('2010-05-17'));
+
     return(
-        <div>
+        <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
            <Titulo color='white' size='32px' >Cadastre-se</Titulo>
-            <Box sx={{ display: 'flex', flexWrap: 'wrap', margin: 0 + ' auto', maxWidth: 350 + 'px'}}>     
+            <Box component="form"
+                sx={{
+                    display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'
+                }}
+                noValidate
+                autoComplete="off">     
             
-                <div>
+                
                     <TextField
                     label="Nome"
                     id="filled-start-adornment"
                     sx={{ m: 1, width: '25ch' }}
                     variant="filled"
                     />
-                </div>
-                <div>
+                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                        <DateField
+                        label="Data de nascimento"
+                        onChange={(newValue) => setValue(newValue)}
+                        variant="filled"
+                        format="DD-MM-YYYY"
+                        sx={{ m: 1, width: '25ch' }}
+                        />
+                    </LocalizationProvider>
+              
                     <TextField
                         label="CPF"
                         id="filled-start-adornment"
                         sx={{ m: 1, width: '25ch' }}
                         variant="filled"
                         />
-                </div>
-                <div>
                     <TextField
-                    label="Email"
-                    id="filled-start-adornment"
-                    sx={{ m: 1, width: '25ch' }}
-                    variant="filled"
+                        label="Email"
+                        id="filled-start-adornment"
+                        sx={{ m: 1, width: '25ch' }}
+                        variant="filled"
                     />
-                </div>
-                <div>
+               
+                   
+              
                     <FormControl sx={{ m: 1, width: '25ch' }} variant="filled">
-                        <InputLabel htmlFor="filled-adornment-password">Password</InputLabel>
+                        <InputLabel htmlFor="filled-adornment-password">Digite sua senha</InputLabel>
                         <FilledInput
                             id="filled-adornment-password"
                             type={showPassword ? 'text' : 'password'}
@@ -73,7 +96,7 @@ function CadastroUser() {
                         />
                     </FormControl>
                     <FormControl sx={{ m: 1, width: '25ch' }} variant="filled">
-                        <InputLabel htmlFor="filled-adornment-password">Password</InputLabel>
+                        <InputLabel htmlFor="filled-adornment-password">Confirme sua senha</InputLabel>
                         <FilledInput
                             id="filled-adornment-password"
                             type={showPassword ? 'text' : 'password'}
@@ -91,8 +114,24 @@ function CadastroUser() {
                             }
                         />
                     </FormControl>
-                </div>
-        </Box>
+                
+            </Box>
+            <Button variant="contained" endIcon={<SendIcon />} color='success' style={{marginTop: 10 + 'px'}}>
+                Cadastrar
+            </Button>
+
+            <Texto color='white'> Já tem cadastro? <Link
+                component="button"
+                variant="body2"
+                onClick={() => {
+                    console.info("I'm a button.");
+                }}
+                >
+                Entre aqui! 
+                </Link>
+                
+            </Texto>
+
     </div>
     );
 };

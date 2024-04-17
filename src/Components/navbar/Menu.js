@@ -61,28 +61,24 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
+const pages = [
+  { nome: 'Ofertas', url: '/cadastroUser' },
+  { nome: 'Plataformas', url: '/' },
+  { nome: 'Gêneros', url: '/'}
+];
 
-
-const pages = ['Ofertas', 'Plataformas', 'Gêneros'];
-const settings = ['Profile', 'Logout'];
+const settings = [
+    { nome: 'Cadastrar', url: '/cadastroUser' },
+    { nome: 'Login', url: '/login' },
+    { nome: 'Configurações', url: '/configuracoes' }
+];
 
 function ResponsiveAppBar() {
     const [anchorEl, setAnchorEl] = React.useState(null);
-    const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
 
     const isMenuOpen = Boolean(anchorEl);
-    const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
-
-    
-    const handleMobileMenuOpen = (event) => {
-        setMobileMoreAnchorEl(event.currentTarget);
-    };
-
-    const handleMobileMenuClose = () => {
-        setMobileMoreAnchorEl(null);
-      };
 
     const handleOpenNavMenu = (event) => {
         setAnchorElNav(event.currentTarget);
@@ -97,48 +93,7 @@ function ResponsiveAppBar() {
 
     const handleCloseUserMenu = () => {
         setAnchorElUser(null);
-    };
-
-
-    const mobileMenuId = 'primary-search-account-menu-mobile';
-    const renderMobileMenu = (
-        <Menu
-          anchorEl={mobileMoreAnchorEl}
-          anchorOrigin={{
-            vertical: 'top',
-            horizontal: 'right',
-          }}
-          id={mobileMenuId}
-          keepMounted
-          transformOrigin={{
-            vertical: 'top',
-            horizontal: 'right',
-          }}
-          open={isMobileMenuOpen}
-          onClose={handleMobileMenuClose}
-        >
-          <MenuItem>
-            <IconButton size="large" aria-label="show 4 new mails" color="inherit">
-              <Badge badgeContent={4} color="error">
-                <MailIcon />
-              </Badge>
-            </IconButton>
-            <p>Messages</p>
-          </MenuItem>
-          <MenuItem>
-            <IconButton
-              size="large"
-              aria-label="show 17 new notifications"
-              color="inherit"
-            >
-              <Badge badgeContent={17} color="error">
-                <NotificationsIcon />
-              </Badge>
-            </IconButton>
-            <p>Notifications</p>
-          </MenuItem>
-        </Menu>
-      );
+    };    
 
     return (
         <AppBar position="static">
@@ -194,8 +149,10 @@ function ResponsiveAppBar() {
                 }}
                 >
                 {pages.map((page) => (
-                    <MenuItem key={page} onClick={handleCloseNavMenu}>
-                    <Typography textAlign="center">{page}</Typography>
+                    <MenuItem key={page.nome} onClick={() =>{
+                      window.location.href = page.url;
+                    }}>
+                      <Typography textAlign="center">{page.nome}</Typography>
                     </MenuItem>
                 ))}
                     
@@ -224,11 +181,12 @@ function ResponsiveAppBar() {
             <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
                 {pages.map((page) => (
                 <Button
-                    key={page}
-                    onClick={handleCloseNavMenu}
+                    key={page.nome}
+                    onClick={() =>{
+                      window.location.href = page.url;}}
                     sx={{ my: 2, color: 'white', display: 'block' }}
                 >
-                    {page}
+                    {page.nome}
                 </Button>
                 ))}
                 
@@ -242,7 +200,7 @@ function ResponsiveAppBar() {
                 inputProps={{ 'aria-label': 'search' }}
                 />
             </Search>
-            <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
+            {/* <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
                 <IconButton size="large" aria-label="show 4 new mails" color="inherit">
                 <Badge badgeContent={4} color="error">
                     <MailIcon />
@@ -257,9 +215,8 @@ function ResponsiveAppBar() {
                     <NotificationsIcon />
                 </Badge>
                 </IconButton>
-                {renderMobileMenu}
-            </Box>
-            <Box sx={{ flexGrow: 0 }}>
+            </Box> */}
+            <Box sx={{ flexGrow: 0, marginLeft: 10 + 'px'}}>
                 <Tooltip title="Open settings">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                     <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
@@ -282,8 +239,10 @@ function ResponsiveAppBar() {
                 onClose={handleCloseUserMenu}
                 >
                 {settings.map((setting) => (
-                    <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                    <Typography textAlign="center">{setting}</Typography>
+                    <MenuItem key={setting.nome} onClick={() => {
+                      window.location.href = setting.url;
+                    }}>
+                    <Typography textAlign="center">{setting.nome}</Typography>
                     </MenuItem>
                 ))}
                 </Menu>

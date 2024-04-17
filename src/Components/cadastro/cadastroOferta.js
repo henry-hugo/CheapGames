@@ -24,7 +24,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DateField } from '@mui/x-date-pickers/DateField';
 
-function CadastroUser() {
+function CadastroOferta() {
     const [showPassword, setShowPassword] = React.useState(false);
   
     const handleClickShowPassword = () => setShowPassword((show) => !show);
@@ -183,7 +183,7 @@ function CadastroUser() {
                 to="/"
                 variant="body2"
                 onClick={() => {
-                    window.location.href = '/login';
+                    window.location.href = '/';
                 }}
                 >
                 Entre aqui! 
@@ -195,4 +195,4 @@ function CadastroUser() {
     );
 };
 
-export default CadastroUser;
+export default CadastroOferta;

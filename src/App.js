@@ -6,6 +6,7 @@ import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import VerticalTabs from './Components/navbar/Tabs';
 import CadastroUser from './Components/cadastro/cadastroUser';
+import Login from './Components/cadastro/login';
 
 const darkTheme = createTheme({
   palette: {
@@ -21,6 +22,7 @@ function App() {
     <div className="App-header">
     <Routes>
         <Route path='/' element={<VerticalTabs/>}/>
+        <Route path='/login' element={<Login/>}/>
         <Route path='/cadastroUser' element={<CadastroUser/>}/>        
     </Routes> 
     </div>

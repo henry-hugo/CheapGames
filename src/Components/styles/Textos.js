@@ -6,6 +6,7 @@ export const Titulo = styled.h1`
     font-size: ${props => props.size || '24px'};
     color: ${props => props.color || 'black'};
     line-weight: 1.5em;
+    text-align:center;
 `;
 
 export const Subitulo = styled.h2`

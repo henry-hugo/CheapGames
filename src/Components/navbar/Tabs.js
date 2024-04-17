@@ -4,8 +4,8 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
-import CardOfertas from '../maisBuscados/Ofertas';
-import CardOfertas2 from '../maisBuscados/CardPlaceHolder';
+import CardOfertas from '../produtos/Ofertas';
+import CardOfertas2 from '../produtos/CardPlaceHolder';
 import { Container } from '../styles/Containers';
 
 

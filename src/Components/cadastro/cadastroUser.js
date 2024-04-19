@@ -84,95 +84,92 @@ function CadastroUser() {
         <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
            <Titulo color='white' size='32px' >Cadastre-se</Titulo>
             <Box component="form"
-                sx={{
-                    display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'
-                }}
-                noValidate
-                autoComplete="off"
-                onSubmit={handleSubmit}>     
-            
+            sx={{
+                display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'
+            }}
+            noValidate
+            autoComplete="off"
+            onSubmit={handleSubmit}>
                 
-                    <TextField
-                    label="Nome"
-                    id="filled-start-adornment"
-                    sx={{ m: 1, width: '25ch' }}
-                    variant="filled"
-                    name='nome'
-                    onChange={handleChange}
-                    />
-                    <LocalizationProvider dateAdapter={AdapterDayjs}>
-                        <DateField
-                        label="Data de nascimento"
-                        variant="filled"
-                        format="DD-MM-YYYY"
-                        name='data'
-                        onChange={handleChange}
-                        sx={{ m: 1, width: '25ch' }}
-                        />
-                    </LocalizationProvider>
-              
-                    <TextField
-                        label="CPF"
-                        id="filled-start-adornment"
-                        sx={{ m: 1, width: '25ch' }}
-                        variant="filled"
-                        name='cpf'
-                        onChange={handleChange}
-                        />
-                    <TextField
-                        label="Email"
-                        id="filled-start-adornment"
-                        sx={{ m: 1, width: '25ch' }}
-                        name='email'
-                        onChange={handleChange}
-                        variant="filled"
-                    />
-               
-                   
-              
-                    <FormControl sx={{ m: 1, width: '25ch' }} variant="filled">
-                        <InputLabel htmlFor="filled-adornment-password">Digite sua senha</InputLabel>
-                        <FilledInput
-                            id="filled-adornment-password"
-                            type={showPassword ? 'text' : 'password'}
-                            name='senha'
-                            onChange={handleChange}
-                            endAdornment={
-                            <InputAdornment position="end">
-                                <IconButton
-                                aria-label="toggle password visibility"
-                                onClick={handleClickShowPassword}
-                                onMouseDown={handleMouseDownPassword}
-                                edge="end"
-                                >
-                                {showPassword ? <VisibilityOff /> : <Visibility />}
-                                </IconButton>
-                            </InputAdornment>
-                            }
-                        />
-                    </FormControl>
-                    <FormControl sx={{ m: 1, width: '25ch' }} variant="filled">
-                        <InputLabel htmlFor="filled-adornment-password">Confirme sua senha</InputLabel>
-                        <FilledInput
-                            id="filled-adornment-password"
-                            type={showPassword ? 'text' : 'password'}
-                            name='senha'
-                            onChange={handleChange}
-                            endAdornment={
-                            <InputAdornment position="end">
-                                <IconButton
-                                aria-label="toggle password visibility"
-                                onClick={handleClickShowPassword}
-                                onMouseDown={handleMouseDownPassword}
-                                edge="end"
-                                >
-                                {showPassword ? <VisibilityOff /> : <Visibility />}
-                                </IconButton>
-                            </InputAdornment>
-                            }
-                        />
-                    </FormControl>
-                
+              <TextField
+              label="Nome"
+              id="filled-start-adornment"
+              sx={{ m: 1, width: '25ch' }}
+              variant="filled"
+              name='nome'
+              onChange={handleChange}
+              />
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                  <DateField
+                  label="Data de nascimento"
+                  variant="filled"
+                  format="DD-MM-YYYY"
+                  name='data'
+                  onChange={handleChange}
+                  sx={{ m: 1, width: '25ch' }}
+                  />
+              </LocalizationProvider>
+        
+              <TextField
+                  label="CPF"
+                  id="filled-start-adornment"
+                  sx={{ m: 1, width: '25ch' }}
+                  variant="filled"
+                  name='cpf'
+                  onChange={handleChange}
+                  />
+              <TextField
+                  label="Email"
+                  id="filled-start-adornment"
+                  sx={{ m: 1, width: '25ch' }}
+                  name='email'
+                  onChange={handleChange}
+                  variant="filled"
+              /> 
+        
+              <FormControl sx={{ m: 1, width: '25ch' }} variant="filled">
+                  <InputLabel htmlFor="filled-adornment-password">Digite sua senha</InputLabel>
+                  <FilledInput
+                      id="filled-adornment-password"
+                      type={showPassword ? 'text' : 'password'}
+                      name='senha'
+                      onChange={handleChange}
+                      endAdornment={
+                      <InputAdornment position="end">
+                          <IconButton
+                          aria-label="toggle password visibility"
+                          onClick={handleClickShowPassword}
+                          onMouseDown={handleMouseDownPassword}
+                          edge="end"
+                          >
+                          {showPassword ? <VisibilityOff /> : <Visibility />}
+                          </IconButton>
+                      </InputAdornment>
+                      }
+                  />
+              </FormControl>
+              <FormControl sx={{ m: 1, width: '25ch' }} variant="filled">
+                  <InputLabel htmlFor="filled-adornment-password">Confirme sua senha</InputLabel>
+                  <FilledInput
+                      id="filled-adornment-password"
+                      type={showPassword ? 'text' : 'password'}
+                      name='senha'
+                      onChange={handleChange}
+                      endAdornment={
+                      <InputAdornment position="end">
+                          <IconButton
+                          aria-label="toggle password visibility"
+                          onClick={handleClickShowPassword}
+                          onMouseDown={handleMouseDownPassword}
+                          edge="end"
+                          >
+                          {showPassword ? <VisibilityOff /> : <Visibility />}
+                          </IconButton>
+                      </InputAdornment>
+                      }
+                  />
+              </FormControl>
+          
             </Box>
             <Button variant="contained" endIcon={<SendIcon />} color='success' style={{marginTop: 10 + 'px'}} type="submit">
                 Cadastrar

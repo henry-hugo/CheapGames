@@ -7,6 +7,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import VerticalTabs from './Components/navbar/Tabs';
 import CadastroUser from './Components/cadastro/cadastroUser';
 import Login from './Components/cadastro/login';
+import CadastroOferta from './Components/cadastro/cadastroOferta';
 
 const darkTheme = createTheme({
   palette: {
@@ -23,7 +24,8 @@ function App() {
     <Routes>
         <Route path='/' element={<VerticalTabs/>}/>
         <Route path='/login' element={<Login/>}/>
-        <Route path='/cadastroUser' element={<CadastroUser/>}/>        
+        <Route path='/cadastroUser' element={<CadastroUser/>}/>
+        <Route path='/cadastroOferta' element={<CadastroOferta/>}/> 
     </Routes> 
     </div>
     </ThemeProvider>

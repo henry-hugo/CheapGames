@@ -1,46 +1,47 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
-import IconButton from '@mui/material/IconButton';
-import Input from '@mui/material/Input';
 import FilledInput from '@mui/material/FilledInput';
-import OutlinedInput from '@mui/material/OutlinedInput';
 import InputLabel from '@mui/material/InputLabel';
 import InputAdornment from '@mui/material/InputAdornment';
-import AccountCircle from '@mui/icons-material/AccountCircle';
-import FormHelperText from '@mui/material/FormHelperText';
 import FormControl from '@mui/material/FormControl';
 import TextField from '@mui/material/TextField';
-import Visibility from '@mui/icons-material/Visibility';
-import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import MenuItem from '@mui/material/MenuItem';
 import { Texto, Titulo } from '../styles/Textos';
 import Button from '@mui/material/Button';
 import SendIcon from '@mui/icons-material/Send';
 import Link from '@mui/material/Link';
 import { useState } from "react"
 
-import dayjs from 'dayjs';
-import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { DateField } from '@mui/x-date-pickers/DateField';
+import { styled } from '@mui/material/styles';
+import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+
+const VisuallyHiddenInput = styled('input')({
+  clip: 'rect(0 0 0 0)',
+  clipPath: 'inset(50%)',
+  height: 1,
+  overflow: 'hidden',
+  position: 'absolute',
+  bottom: 0,
+  left: 0,
+  whiteSpace: 'nowrap',
+  width: 1,
+});
 
 function CadastroOferta() {
-    const [showPassword, setShowPassword] = React.useState(false);
-  
-    const handleClickShowPassword = () => setShowPassword((show) => !show);
-  
-    const handleMouseDownPassword = (event) => {
-      event.preventDefault();
-    };
 
-    const [value, setValue] = React.useState(dayjs('2010-05-17'));
+    const[plataformas, setPlataformas] = useState([]);
+
+    const[categorias, setCategorias] = useState([]);
+
 
     const [formData, setFormData] = useState({
         nome: '',
-        email: '',
-        senha: '',
-        data: '',
-        cpf: ''
+        precoAtual: 0,
+        precoAntigo: 0,
+        descricao: '',
+        categoria: '',
+        plataforma: '',
+        link: '',
       });
     
       const handleChange = (event) => {
@@ -67,13 +68,15 @@ function CadastroOferta() {
           // Limpar o formulário após o envio bem-sucedido
           setFormData({
             nome: '',
-            email: '',
-            senha: '',
-            data: '',
-            cpf: ''
+            precoAtual: 0,
+            precoAntigo: 0,
+            descricao: '',
+            categoria: '',
+            plataforma: '',
+            link: '',
           });
     
-          alert('Usuário cadastrado com sucesso!');
+          alert('Oferta postada com sucesso, obrigado por ajudar nossa comunidade!');
         } catch (error) {
           console.error('Erro:', error);
           alert('Erro ao cadastrar usuário. Por favor, tente novamente.');
@@ -82,114 +85,114 @@ function CadastroOferta() {
 
     return(
         <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
-           <Titulo color='white' size='32px' >Cadastre-se</Titulo>
-            <Box component="form"
-                sx={{
-                    display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'
-                }}
-                noValidate
-                autoComplete="off"
-                onSubmit={handleSubmit}>     
+          <Titulo color='white' size='32px' >Poste uma oferta!</Titulo>
+          <Box component="form"
+            sx={{
+                display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'
+            }}
+            noValidate
+            autoComplete="off"
+            onSubmit={handleSubmit}>  
+            <Box sx={{'& .MuiTextField-root': { m: 1, width: '25ch' }}}>     
             
-                
-                    <TextField
-                    label="Nome"
-                    id="filled-start-adornment"
-                    sx={{ m: 1, width: '25ch' }}
-                    variant="filled"
-                    name='nome'
-                    onChange={handleChange}
-                    />
-                    <LocalizationProvider dateAdapter={AdapterDayjs}>
-                        <DateField
-                        label="Data de nascimento"
-                        variant="filled"
-                        format="DD-MM-YYYY"
-                        name='data'
-                        onChange={handleChange}
-                        sx={{ m: 1, width: '25ch' }}
-                        />
-                    </LocalizationProvider>
+              <div>
+                <TextField
+                label="Jogo"
+                id="filled-start-adornment"
+                variant="filled"
+                name='nome'
+                onChange={handleChange}
+                />
+
+                <TextField
+                label="Link"
+                id="filled-start-adornment"
+                variant="filled"
+                name='link'
+                onChange={handleChange}
+                />
+              </div>
+
+              <div>
+                <FormControl variant="filled" sx={{ m: 1, width: '25ch' }}>
+                  <InputLabel htmlFor="filled-adornment-amount">Preço antigo</InputLabel>
+                  <FilledInput
+                    id="filled-adornment-amount"
+                    startAdornment={<InputAdornment position="start">$</InputAdornment>}
+                    type='number'
+                  />
+                </FormControl>
+
+                <FormControl  variant="filled" sx={{ m: 1, width: '25ch' }}>
+                <InputLabel htmlFor="filled-adornment-amount">Preço em promoção</InputLabel>
+                <FilledInput
+                  id="filled-adornment-amount"
+                  startAdornment={<InputAdornment position="start">$</InputAdornment>}
+                  type='number'
+                />
+              </FormControl>
+
+              </div>
               
-                    <TextField
-                        label="CPF"
-                        id="filled-start-adornment"
-                        sx={{ m: 1, width: '25ch' }}
-                        variant="filled"
-                        name='cpf'
-                        onChange={handleChange}
-                        />
-                    <TextField
-                        label="Email"
-                        id="filled-start-adornment"
-                        sx={{ m: 1, width: '25ch' }}
-                        name='email'
-                        onChange={handleChange}
-                        variant="filled"
-                    />
-               
-                   
-              
-                    <FormControl sx={{ m: 1, width: '25ch' }} variant="filled">
-                        <InputLabel htmlFor="filled-adornment-password">Digite sua senha</InputLabel>
-                        <FilledInput
-                            id="filled-adornment-password"
-                            type={showPassword ? 'text' : 'password'}
-                            name='senha'
-                            onChange={handleChange}
-                            endAdornment={
-                            <InputAdornment position="end">
-                                <IconButton
-                                aria-label="toggle password visibility"
-                                onClick={handleClickShowPassword}
-                                onMouseDown={handleMouseDownPassword}
-                                edge="end"
-                                >
-                                {showPassword ? <VisibilityOff /> : <Visibility />}
-                                </IconButton>
-                            </InputAdornment>
-                            }
-                        />
-                    </FormControl>
-                    <FormControl sx={{ m: 1, width: '25ch' }} variant="filled">
-                        <InputLabel htmlFor="filled-adornment-password">Confirme sua senha</InputLabel>
-                        <FilledInput
-                            id="filled-adornment-password"
-                            type={showPassword ? 'text' : 'password'}
-                            name='senha'
-                            onChange={handleChange}
-                            endAdornment={
-                            <InputAdornment position="end">
-                                <IconButton
-                                aria-label="toggle password visibility"
-                                onClick={handleClickShowPassword}
-                                onMouseDown={handleMouseDownPassword}
-                                edge="end"
-                                >
-                                {showPassword ? <VisibilityOff /> : <Visibility />}
-                                </IconButton>
-                            </InputAdornment>
-                            }
-                        />
-                    </FormControl>
-                
+              <div>
+                <TextField
+                id="filled-select-currency"
+                select
+                label="Categoria"
+                helperText=""
+                variant="filled"
+                >
+                {categorias.map((option) => (
+                  <MenuItem key={option.value} value={option.value}>
+                    {option.label}
+                  </MenuItem>
+                ))}
+                </TextField>
+                <TextField
+                id="filled-select-currency"
+                select
+                label="Plataforma"
+                helperText=""
+                variant="filled"
+                >
+                {plataformas.map((option) => (
+                  <MenuItem key={option.value} value={option.value}>
+                    {option.label}
+                  </MenuItem>
+                ))}
+                </TextField>
+              </div>
             </Box>
-            <Button variant="contained" endIcon={<SendIcon />} color='success' style={{marginTop: 10 + 'px'}} type="submit">
-                Cadastrar
+            <TextField
+              id="filled-multiline"
+              label="Descrição"
+              multiline
+              rows={4}        
+              sx={{ m: 1, width: '51ch'}}
+              placeholder='Descreva aqui como os gamers podem aproveitar sua oferta!'
+              variant="filled"
+            />            
+          </Box>
+
+          <div style={{ display: 'flex',justifyContent: 'space-around', alignItems: 'center', marginTop: 10 + 'px' }}> 
+
+            <Button
+            component="label"
+            role={undefined}
+            variant="contained"
+            tabIndex={-1}
+            startIcon={<CloudUploadIcon />}
+            sx={{ marginRight: 10 + 'px'}}
+            >
+              Capa do jogo
+              <VisuallyHiddenInput type="file" />
+            </Button>       
+            
+            <Button variant="contained" endIcon={<SendIcon />} color='success' type="submit">
+                Postar
             </Button>
 
-            <Texto color='white'> Já tem cadastro? <Link
-                component="button"
-                to="/"
-                variant="body2"
-                onClick={() => {
-                    window.location.href = '/';
-                }}
-                >
-                Entre aqui! 
-                </Link>
-                
-            </Texto>
+          </div>
 
     </div>
     );

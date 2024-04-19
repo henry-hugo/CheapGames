@@ -15,6 +15,8 @@ import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import InputBase from '@mui/material/InputBase';
 import SearchIcon from '@mui/icons-material/Search';
+import Fab from '@mui/material/Fab';
+import AddIcon from '@mui/icons-material/Add';
 import MailIcon from '@mui/icons-material/Mail';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import Badge from '@mui/material/Badge';
@@ -217,6 +219,9 @@ function ResponsiveAppBar() {
                 </IconButton>
             </Box> */}
             <Box sx={{ flexGrow: 0, marginLeft: 10 + 'px'}}>
+                <Fab size="small" color="success" aria-label="add" sx={{marginRight: 10 + 'px'}} onClick={() => {window.location.href = '/cadastroOferta';}}>
+                    <AddIcon />
+                </Fab>
                 <Tooltip title="Open settings">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                     <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />

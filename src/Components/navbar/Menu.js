@@ -66,7 +66,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 const pages = [
   { nome: 'Ofertas', url: '/cadastroUser' },
   { nome: 'Plataformas', url: '/' },
-  { nome: 'Gêneros', url: '/'}
+  { nome: 'Ranks', url: '/Ranks'}
 ];
 
 const settings = [

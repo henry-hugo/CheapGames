@@ -40,8 +40,9 @@ function CadastroUser() {
         Email: '',
         Password: '',
         Credit:0,
-        data: dayjs(),
-        CPF: ''
+        Date: dayjs(),
+        CPF: '',
+        Active:true
       });
     
       const handleChange = (event) => {
@@ -57,7 +58,7 @@ function CadastroUser() {
         event.preventDefault();
         
         try {
-          const response = await fetch('sua-url-da-api', {
+          const response = await fetch('http://127.0.0.1:8000/api/usuario', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json'
@@ -66,17 +67,19 @@ function CadastroUser() {
           });
     
           if (!response.ok) {
+            alert("aaaaa")
             throw new Error('Erro ao cadastrar usuário');
           }
-    
+          console.log(JSON.stringify(formData))
           // Limpar o formulário após o envio bem-sucedido
           setFormData({
             Username: '',
             Email: '',
             Password: '',
             Credit:0,
-            data: dayjs(),
-            CPF: ''
+            Date: dayjs(),
+            CPF: '',
+            Active:true
           });
     
           alert('Usuário cadastrado com sucesso!');
@@ -87,7 +90,7 @@ function CadastroUser() {
     };
 
     return(
-        <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
+        <form style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}} onSubmit={handleSubmit}>
            <Titulo color='white' size='32px' >Cadastre-se</Titulo>
             <Box component="form"
             sx={{
@@ -95,7 +98,7 @@ function CadastroUser() {
             }}
             noValidate
             autoComplete="off"
-            onSubmit={handleSubmit}>
+            >
                 
               <TextField
               label="Nome"
@@ -111,8 +114,8 @@ function CadastroUser() {
                   label="Data"
                   variant="filled"
                   format="DD-MM-YYYY"
-                  name='data'
-                  value={formData.data}
+                  name='Date'
+                  value={formData.Date}
                   onChange={handleChange}
                   sx={{ m: 1, width: '25ch' }}
                   readOnly
@@ -160,7 +163,7 @@ function CadastroUser() {
                       }
                   />
               </FormControl>
-              <FormControl sx={{ m: 1, width: '25ch' }} variant="filled">
+              {/* <FormControl sx={{ m: 1, width: '25ch' }} variant="filled">
                   <InputLabel htmlFor="filled-adornment-password">Confirme sua senha</InputLabel>
                   <FilledInput
                       id="filled-adornment-password"
@@ -180,7 +183,7 @@ function CadastroUser() {
                       </InputAdornment>
                       }
                   />
-              </FormControl>
+              </FormControl> */}
           
             </Box>
             <Button variant="contained" endIcon={<SendIcon />} color='success' style={{marginTop: 10 + 'px'}} type="submit">
@@ -200,7 +203,7 @@ function CadastroUser() {
                 
             </Texto>
 
-    </div>
+    </form>
     );
 };
 

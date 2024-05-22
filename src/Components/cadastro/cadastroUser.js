@@ -34,18 +34,23 @@ function CadastroUser() {
     };
 
     const [value, setValue] = React.useState(dayjs('2010-05-17'));
-
+  
     const [formData, setFormData] = useState({
-        nome: '',
-        email: '',
-        senha: '',
-        data: '',
-        cpf: ''
+        Username: '',
+        Email: '',
+        Password: '',
+        Credit:0,
+        data: dayjs(),
+        CPF: ''
       });
     
       const handleChange = (event) => {
         const { name, value } = event.target;
-        setFormData({ ...formData, [name]: value });
+        // setFormData({ ...formData, [name]: value });
+        setFormData((prevFormData) => ({
+          ...prevFormData,
+          [name]: value,
+        }));
       };
     
       const handleSubmit = async (event) => {
@@ -66,11 +71,12 @@ function CadastroUser() {
     
           // Limpar o formulário após o envio bem-sucedido
           setFormData({
-            nome: '',
-            email: '',
-            senha: '',
-            data: '',
-            cpf: ''
+            Username: '',
+            Email: '',
+            Password: '',
+            Credit:0,
+            data: dayjs(),
+            CPF: ''
           });
     
           alert('Usuário cadastrado com sucesso!');
@@ -96,17 +102,20 @@ function CadastroUser() {
               id="filled-start-adornment"
               sx={{ m: 1, width: '25ch' }}
               variant="filled"
-              name='nome'
+              name='Username'
+              value={formData.Username}
               onChange={handleChange}
               />
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                   <DateField
-                  label="Data de nascimento"
+                  label="Data"
                   variant="filled"
                   format="DD-MM-YYYY"
                   name='data'
+                  value={formData.data}
                   onChange={handleChange}
                   sx={{ m: 1, width: '25ch' }}
+                  readOnly
                   />
               </LocalizationProvider>
         
@@ -115,14 +124,16 @@ function CadastroUser() {
                   id="filled-start-adornment"
                   sx={{ m: 1, width: '25ch' }}
                   variant="filled"
-                  name='cpf'
+                  name='CPF'
+                  value={formData.CPF}
                   onChange={handleChange}
                   />
               <TextField
                   label="Email"
                   id="filled-start-adornment"
                   sx={{ m: 1, width: '25ch' }}
-                  name='email'
+                  name='Email'
+                  value={formData.Email}
                   onChange={handleChange}
                   variant="filled"
               /> 
@@ -132,7 +143,8 @@ function CadastroUser() {
                   <FilledInput
                       id="filled-adornment-password"
                       type={showPassword ? 'text' : 'password'}
-                      name='senha'
+                      name='Password'
+                      value={formData.Password}
                       onChange={handleChange}
                       endAdornment={
                       <InputAdornment position="end">
@@ -153,7 +165,7 @@ function CadastroUser() {
                   <FilledInput
                       id="filled-adornment-password"
                       type={showPassword ? 'text' : 'password'}
-                      name='senha'
+                      name='PasswordConfirm'
                       onChange={handleChange}
                       endAdornment={
                       <InputAdornment position="end">

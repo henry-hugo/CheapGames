@@ -20,9 +20,10 @@ import ThumbDownOffAltIcon from '@mui/icons-material/ThumbDownOffAlt';
 import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
 import { Share } from '@mui/icons-material';
 
-
+//Quebrado quando tem mais de uma informação ele também tira o menu lateral
 export default function CardOfertas({post}) {
-  
+    let firstImage = post.images[Object.keys(post.images)[0]];
+    let imageURL = typeof(firstImage) === 'object'? firstImage.ImageURL : 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Placeholder_view_vector.svg/991px-Placeholder_view_vector.svg.png'
     return (
       <Card sx={{ maxWidth: 345 }} style={{marginRight: 20 + 'px'}}>
         <CardHeader
@@ -42,7 +43,7 @@ export default function CardOfertas({post}) {
         <CardMedia
           component="img"
           height="194"
-          image="https://image.api.playstation.com/vulcan/ap/rnd/202311/1309/746f848d0be7107e301df1142745b334b64fbc87c218e3b1.jpg"
+          image={imageURL}
           alt="Paella dish"
         />
         <CardContent>

@@ -12,7 +12,7 @@ import { useState, useEffect } from 'react';
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
   let token = sessionStorage.getItem('token');
-  console.log(token)
+
   return (
     <div
       role="tabpanel"
@@ -61,7 +61,7 @@ export default function VerticalTabs() {
           throw new Error('Erro ao buscar os dados');
         }
         setPosts(data.posts);
-        console.log(data.posts);
+        
       } catch (error) {
         console.error('erro ao retornar os dados');
         

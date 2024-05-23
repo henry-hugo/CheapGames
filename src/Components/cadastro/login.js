@@ -65,7 +65,7 @@ function Login() {
           const data = await response.json();
           // console.log(data);
           sessionStorage.setItem('token', data.token);
-    
+          sessionStorage.setItem('UserID', data.UserID);
           // localStorage.setItem('name', data.name);
           // Limpar o formulário após o envio bem-sucedido
           setFormData({           

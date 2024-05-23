@@ -40,34 +40,90 @@ function CadastroOferta() {
   // 'NewPrice' => 'required|numeric',
   // 'OldPrice' => 'required|numeric',
   // 'Link' => 'nullable|url',
-    const[plataformas, setPlataformas] = useState([]);
 
+    const url = 'http://127.0.0.1:8000/api';
+    
+    const[plataformas, setPlataformas] = useState([]);
     const[categorias, setCategorias] = useState([]);
+    const [formData, setFormData] = useState({
+      Title: '',
+      NewPrice: 0,
+      OldPrice: 0,
+      Description: '',
+      CategoryID: 0,
+      PlatformID: 0,
+      Date: '',
+      Link: '',
+      Active: true,
+      UserID: 0
+    });
 
     const token = sessionStorage.getItem('token');
     
-
+  
     const navigate = useNavigate();
 
+    //Checagem do login
     useEffect(() => {
       if (!token) {
           navigate('/login');
       }
     }, [token, navigate]);
+    
+    //Busca das options
+    useEffect(() => {
+      const fetchCategorias = async () => {
+        try {
+          const response = await fetch(`${url}/categoria`);
+          
+          const data = await response.json();
+          const categoriasArray = Object.values(data.category);
+         
+          if (data.ok) {
+            throw new Error('Erro ao buscar os dados');
+          }
+         
+          setCategorias(categoriasArray);
 
+        } catch (error) {
+          console.error('erro ao retornar os dados');
+          
+        }
+      };
+      const fetchPlataformas = async () => {
+        try {
+          const response = await fetch(`${url}/plataforma`);
+          
+          const data = await response.json();
+         
+          if (data.ok) {
+            throw new Error('Erro ao buscar os dados');
+          }
+         
+          setPlataformas(data.platform);
+          
+        } catch (error) {
+          console.error('erro ao retornar os dados');
+          
+        }
+      };
+  
+      fetchCategorias();
+      fetchPlataformas();
+    }, []);
 
-    const [formData, setFormData] = useState({
-        Title: '',
-        NewPrice: 0,
-        OldPrice: 0,
-        Description: '',
-        CategoryID: 0,
-        PlatformID: 0,
-        Date: dayjs(),
-        Link: '',
-        Active: true,
-        UserID: 0
-      });
+    // const [formData, setFormData] = useState({
+    //     Title: '',
+    //     NewPrice: 0,
+    //     OldPrice: 0,
+    //     Description: '',
+    //     CategoryID: 0,
+    //     PlatformID: 0,
+    //     Date: dayjs(),
+    //     Link: '',
+    //     Active: true,
+    //     UserID: 0
+    //   });
     
       const handleChange = (event) => {
         const { name, value } = event.target;
@@ -76,14 +132,19 @@ function CadastroOferta() {
     
       const handleSubmit = async (event) => {
         event.preventDefault();
-        
+        let formDataToSend = new FormData();
+        for (const key in formData) {
+          formDataToSend.append(key, formData[key]);
+        }
+       
         try {
-          const response = await fetch('sua-url-da-api', {
+          const response = await fetch(`${url}/post`, {
             method: 'POST',
             headers: {
-              'Content-Type': 'application/json'
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${token}`
             },
-            body: JSON.stringify(formData)
+            body: formDataToSend
           });
     
           if (!response.ok) {
@@ -170,8 +231,8 @@ function CadastroOferta() {
                       variant="filled"
                       >
                       {categorias.map((option) => (
-                        <MenuItem key={option.value} value={option.value}>
-                          {option.label}
+                        <MenuItem key={option.CategoriaID} value={option.CategoriaID}>
+                          {option.Name}
                         </MenuItem>
                       ))}
                       </TextField>
@@ -183,8 +244,8 @@ function CadastroOferta() {
                       variant="filled"
                       >
                       {plataformas.map((option) => (
-                        <MenuItem key={option.value} value={option.value}>
-                          {option.label}
+                        <MenuItem key={option.PlataformaID} value={option.PlataformaID}>
+                          {option.Name}
                         </MenuItem>
                       ))}
                       </TextField>

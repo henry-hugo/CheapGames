@@ -11,7 +11,8 @@ import { useState, useEffect } from 'react';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
-
+  let token = sessionStorage.getItem('token');
+  console.log(token)
   return (
     <div
       role="tabpanel"
@@ -98,11 +99,15 @@ export default function VerticalTabs() {
         </Container>          
       </TabPanel>
       <TabPanel value={value} index={1}>
-        <CardOfertas/>
+        {posts.map(post => (
+            <CardOfertas key={post.PostID} post={post} />// esse aqui fica um em baixo do outro 
+          ))}
       </TabPanel>
       <TabPanel value={value} index={2}>
         <Container>
-            <CardOfertas/>
+            {posts.map(post => (
+            <CardOfertas key={post.PostID} post={post} />
+          ))}
             {/* <CardOfertas2/> */}
         </Container>   
       </TabPanel>

@@ -9,6 +9,7 @@ import CadastroUser from './Components/cadastro/cadastroUser';
 import Login from './Components/cadastro/login';
 import CadastroOferta from './Components/cadastro/cadastroOferta';
 import Ranks from './Components/produtos/Ranks';
+import Logout from './Components/logout/logout';
 
 const darkTheme = createTheme({
   palette: {
@@ -28,6 +29,7 @@ function App() {
         <Route path='/cadastroUser' element={<CadastroUser/>}/>
         <Route path='/cadastroOferta' element={<CadastroOferta/>}/>
         <Route path='/Ranks' element={<Ranks/>}/> 
+        <Route path='/logout' element={<Logout/>}/> 
     </Routes> 
     </div>
     </ThemeProvider>

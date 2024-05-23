@@ -64,7 +64,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 const pages = [
-  { nome: 'Ofertas', url: '/cadastroUser' },
+  { nome: 'Ofertas', url: '/cadastroOferta' },
   { nome: 'Plataformas', url: '/' },
   { nome: 'Ranks', url: '/Ranks'}
 ];
@@ -74,12 +74,17 @@ const settings = [
     { nome: 'Login', url: '/login' },
     { nome: 'Configurações', url: '/configuracoes' }
 ];
+const settingsLogin = [
+    { nome: 'Perfil', url: '/perfil' },
+    { nome: 'Configurações', url: '/configuracoes' },
+    { nome: 'Logout', url: '/logout' }
+]
 
 function ResponsiveAppBar() {
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
-
+    const token = sessionStorage.getItem('token');
     const isMenuOpen = Boolean(anchorEl);
 
     const handleOpenNavMenu = (event) => {
@@ -243,13 +248,19 @@ function ResponsiveAppBar() {
                 open={Boolean(anchorElUser)}
                 onClose={handleCloseUserMenu}
                 >
-                {settings.map((setting) => (
+                {token? (settingsLogin.map((setting) => (
                     <MenuItem key={setting.nome} onClick={() => {
                       window.location.href = setting.url;
                     }}>
                     <Typography textAlign="center">{setting.nome}</Typography>
                     </MenuItem>
-                ))}
+                ))): (settings.map((setting) => (
+                    <MenuItem key={setting.nome} onClick={() => {
+                      window.location.href = setting.url;
+                    }}>
+                    <Typography textAlign="center">{setting.nome}</Typography>
+                    </MenuItem>
+                )))}
                 </Menu>
             </Box>
             </Toolbar>

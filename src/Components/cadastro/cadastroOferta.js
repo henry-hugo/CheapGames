@@ -10,10 +10,12 @@ import { Texto, Titulo } from '../styles/Textos';
 import Button from '@mui/material/Button';
 import SendIcon from '@mui/icons-material/Send';
 import Link from '@mui/material/Link';
-import { useState } from "react"
+import { useState, useEffect } from "react"
 
 import { styled } from '@mui/material/styles';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+import { useNavigate } from 'react-router-dom';
+import dayjs from 'dayjs';
 
 const VisuallyHiddenInput = styled('input')({
   clip: 'rect(0 0 0 0)',
@@ -28,20 +30,43 @@ const VisuallyHiddenInput = styled('input')({
 });
 
 function CadastroOferta() {
-
+  // UserID' => 'required|integer',
+  // 'Title' => 'required|string|max:255',
+  // 'Description' => 'required|string',
+  // 'Active' => 'required|boolean',
+  // 'Date' => 'required|date',
+  // 'CategoryID' => 'required|integer',
+  // 'PlatformID' => 'required|integer',
+  // 'NewPrice' => 'required|numeric',
+  // 'OldPrice' => 'required|numeric',
+  // 'Link' => 'nullable|url',
     const[plataformas, setPlataformas] = useState([]);
 
     const[categorias, setCategorias] = useState([]);
 
+    const token = sessionStorage.getItem('token');
+    
+
+    const navigate = useNavigate();
+
+    useEffect(() => {
+      if (!token) {
+          navigate('/login');
+      }
+    }, [token, navigate]);
+
 
     const [formData, setFormData] = useState({
-        nome: '',
-        precoAtual: 0,
-        precoAntigo: 0,
-        descricao: '',
-        categoria: '',
-        plataforma: '',
-        link: '',
+        Title: '',
+        NewPrice: 0,
+        OldPrice: 0,
+        Description: '',
+        CategoryID: 0,
+        PlatformID: 0,
+        Date: dayjs(),
+        Link: '',
+        Active: true,
+        UserID: 0
       });
     
       const handleChange = (event) => {
@@ -84,117 +109,120 @@ function CadastroOferta() {
     };
 
     return(
-        <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
-          <Titulo color='white' size='32px' >Poste uma oferta!</Titulo>
-          <Box component="form"
-            sx={{
-                display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'
-            }}
-            noValidate
-            autoComplete="off"
-            onSubmit={handleSubmit}>  
-            <Box sx={{'& .MuiTextField-root': { m: 1, width: '25ch' }}}>     
-            
-              <div>
-                <TextField
-                label="Jogo"
-                id="filled-start-adornment"
-                variant="filled"
-                name='nome'
-                onChange={handleChange}
-                />
+      <>
+        {token?(
+          <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
+                <Titulo color='white' size='32px' >Poste uma oferta!</Titulo>
+                <Box component="form"
+                  sx={{
+                      display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'
+                  }}
+                  noValidate
+                  autoComplete="off"
+                  onSubmit={handleSubmit}>  
+                  <Box sx={{'& .MuiTextField-root': { m: 1, width: '25ch' }}}>     
+                  
+                    <div>
+                      <TextField
+                      label="Jogo"
+                      id="filled-start-adornment"
+                      variant="filled"
+                      name='nome'
+                      onChange={handleChange}
+                      />
 
-                <TextField
-                label="Link"
-                id="filled-start-adornment"
-                variant="filled"
-                name='link'
-                onChange={handleChange}
-                />
-              </div>
+                      <TextField
+                      label="Link"
+                      id="filled-start-adornment"
+                      variant="filled"
+                      name='link'
+                      onChange={handleChange}
+                      />
+                    </div>
 
-              <div>
-                <FormControl variant="filled" sx={{ m: 1, width: '25ch' }}>
-                  <InputLabel htmlFor="filled-adornment-amount">Preço antigo</InputLabel>
-                  <FilledInput
-                    id="filled-adornment-amount"
-                    startAdornment={<InputAdornment position="start">$</InputAdornment>}
-                    type='number'
-                  />
-                </FormControl>
+                    <div>
+                      <FormControl variant="filled" sx={{ m: 1, width: '25ch' }}>
+                        <InputLabel htmlFor="filled-adornment-amount">Preço antigo</InputLabel>
+                        <FilledInput
+                          id="filled-adornment-amount"
+                          startAdornment={<InputAdornment position="start">$</InputAdornment>}
+                          type='number'
+                        />
+                      </FormControl>
 
-                <FormControl  variant="filled" sx={{ m: 1, width: '25ch' }}>
-                <InputLabel htmlFor="filled-adornment-amount">Preço em promoção</InputLabel>
-                <FilledInput
-                  id="filled-adornment-amount"
-                  startAdornment={<InputAdornment position="start">$</InputAdornment>}
-                  type='number'
-                />
-              </FormControl>
+                      <FormControl  variant="filled" sx={{ m: 1, width: '25ch' }}>
+                      <InputLabel htmlFor="filled-adornment-amount">Preço em promoção</InputLabel>
+                      <FilledInput
+                        id="filled-adornment-amount"
+                        startAdornment={<InputAdornment position="start">$</InputAdornment>}
+                        type='number'
+                      />
+                    </FormControl>
 
-              </div>
-              
-              <div>
-                <TextField
-                id="filled-select-currency"
-                select
-                label="Categoria"
-                helperText=""
-                variant="filled"
-                >
-                {categorias.map((option) => (
-                  <MenuItem key={option.value} value={option.value}>
-                    {option.label}
-                  </MenuItem>
-                ))}
-                </TextField>
-                <TextField
-                id="filled-select-currency"
-                select
-                label="Plataforma"
-                helperText=""
-                variant="filled"
-                >
-                {plataformas.map((option) => (
-                  <MenuItem key={option.value} value={option.value}>
-                    {option.label}
-                  </MenuItem>
-                ))}
-                </TextField>
-              </div>
-            </Box>
-            <TextField
-              id="filled-multiline"
-              label="Descrição"
-              multiline
-              rows={4}        
-              sx={{ m: 1, width: '51ch'}}
-              placeholder='Descreva aqui como os gamers podem aproveitar sua oferta!'
-              variant="filled"
-            />            
-          </Box>
+                    </div>
+                    
+                    <div>
+                      <TextField
+                      id="filled-select-currency"
+                      select
+                      label="Categoria"
+                      helperText=""
+                      variant="filled"
+                      >
+                      {categorias.map((option) => (
+                        <MenuItem key={option.value} value={option.value}>
+                          {option.label}
+                        </MenuItem>
+                      ))}
+                      </TextField>
+                      <TextField
+                      id="filled-select-currency"
+                      select
+                      label="Plataforma"
+                      helperText=""
+                      variant="filled"
+                      >
+                      {plataformas.map((option) => (
+                        <MenuItem key={option.value} value={option.value}>
+                          {option.label}
+                        </MenuItem>
+                      ))}
+                      </TextField>
+                    </div>
+                  </Box>
+                  <TextField
+                    id="filled-multiline"
+                    label="Descrição"
+                    multiline
+                    rows={4}        
+                    sx={{ m: 1, width: '51ch'}}
+                    placeholder='Descreva aqui como os gamers podem aproveitar sua oferta!'
+                    variant="filled"
+                  />            
+                </Box>
 
-          <div style={{ display: 'flex',justifyContent: 'space-around', alignItems: 'center', marginTop: 10 + 'px' }}> 
+                <div style={{ display: 'flex',justifyContent: 'space-around', alignItems: 'center', marginTop: 10 + 'px' }}> 
 
-            <Button
-            component="label"
-            role={undefined}
-            variant="contained"
-            tabIndex={-1}
-            startIcon={<CloudUploadIcon />}
-            sx={{ marginRight: 10 + 'px'}}
-            >
-              Capa do jogo
-              <VisuallyHiddenInput type="file" />
-            </Button>       
-            
-            <Button variant="contained" endIcon={<SendIcon />} color='success' type="submit">
-                Postar
-            </Button>
+                  <Button
+                  component="label"
+                  role={undefined}
+                  variant="contained"
+                  tabIndex={-1}
+                  startIcon={<CloudUploadIcon />}
+                  sx={{ marginRight: 10 + 'px'}}
+                  >
+                    Capa do jogo
+                    <VisuallyHiddenInput type="file" />
+                  </Button>       
+                  
+                  <Button variant="contained" endIcon={<SendIcon />} color='success' type="submit">
+                      Postar
+                  </Button>
 
-          </div>
+                </div>
 
-    </div>
+          </div>) : (<div>Entre no login: </div>)}
+        </>  
     );
 };
 

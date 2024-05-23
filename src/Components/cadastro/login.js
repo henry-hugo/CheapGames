@@ -23,10 +23,12 @@ import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DateField } from '@mui/x-date-pickers/DateField';
+import { useNavigate } from 'react-router-dom';
 
 function Login() {
     const [showPassword, setShowPassword] = React.useState(false);
-  
+    const navigate = useNavigate();
+
     const handleClickShowPassword = () => setShowPassword((show) => !show);
   
     const handleMouseDownPassword = (event) => {
@@ -36,8 +38,8 @@ function Login() {
     const [value, setValue] = React.useState(dayjs('2010-05-17'));
 
     const [formData, setFormData] = useState({        
-        email: '',
-        senha: '',
+        Email: '',
+        Password: ''
       });
     
       const handleChange = (event) => {
@@ -49,7 +51,7 @@ function Login() {
         event.preventDefault();
         
         try {
-          const response = await fetch('sua-url-da-api', {
+          const response = await fetch('http://127.0.0.1:8000/api/login', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json'
@@ -60,14 +62,19 @@ function Login() {
           if (!response.ok) {
             throw new Error('Erro ao cadastrar usuário');
           }
+          const data = await response.json();
+          // console.log(data);
+          sessionStorage.setItem('token', data.token);
     
+          // localStorage.setItem('name', data.name);
           // Limpar o formulário após o envio bem-sucedido
           setFormData({           
-            email: '',
-            senha: ''
+            Email: '',
+            Password: ''
           });
-    
-          alert('Usuário cadastrado com sucesso!');
+          navigate('/')
+          
+          // alert('Usuário cadastrado com sucesso!');
         } catch (error) {
           console.error('Erro:', error);
           alert('Erro ao cadastrar usuário. Por favor, tente novamente.');
@@ -75,7 +82,7 @@ function Login() {
     };
 
     return(
-        <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
+        <form style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}} onSubmit={handleSubmit}>
            <Titulo color='white' size='32px' >Login</Titulo>
             <Box component="form"
                 sx={{
@@ -89,7 +96,7 @@ function Login() {
                     label="Email"
                     id="filled-start-adornment"
                     sx={{ m: 1, width: '25ch' }}
-                    name='email'
+                    name='Email'
                     onChange={handleChange}
                     variant="filled"
                 />
@@ -99,7 +106,7 @@ function Login() {
                     <FilledInput
                         id="filled-adornment-password"
                         type={showPassword ? 'text' : 'password'}
-                        name='senha'
+                        name='Password'
                         onChange={handleChange}
                         endAdornment={
                         <InputAdornment position="end">
@@ -134,7 +141,7 @@ function Login() {
                 
             </Texto>
 
-    </div>
+    </form>
     );
 };
 

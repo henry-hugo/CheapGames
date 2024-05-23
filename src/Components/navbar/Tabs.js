@@ -7,7 +7,7 @@ import Box from '@mui/material/Box';
 import CardOfertas from '../produtos/Ofertas';
 import CardOfertas2 from '../produtos/CardPlaceHolder';
 import { Container } from '../styles/Containers';
-
+import { useState, useEffect } from 'react';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -48,6 +48,27 @@ export default function VerticalTabs() {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+  const [posts, setPosts] = useState([]);
+  
+
+  useEffect(() => {
+    const fetchPosts = async () => {
+      try {
+        const response = await fetch('http://127.0.0.1:8000/api/post/');
+        const data = await response.json();
+        if (data.status !== 200) {
+          throw new Error('Erro ao buscar os dados');
+        }
+        setPosts(data.posts);
+        console.log(data.posts);
+      } catch (error) {
+        console.error('erro ao retornar os dados');
+        
+      }
+    };
+
+    fetchPosts();
+  }, []);
 
   return (
     <Box
@@ -66,10 +87,14 @@ export default function VerticalTabs() {
         <Tab label="Menor preço" {...a11yProps(2)} />
         
       </Tabs>
+      
       <TabPanel value={value} index={0} style={{display: 'flex'}}>
         <Container>
-            <CardOfertas/>
-            <CardOfertas2/>
+          {posts.map(post => (
+            <CardOfertas key={post.PostID} post={post} />
+          ))}
+            {/* <CardOfertas/> */}
+            {/* <CardOfertas2/> */}
         </Container>          
       </TabPanel>
       <TabPanel value={value} index={1}>
@@ -78,7 +103,7 @@ export default function VerticalTabs() {
       <TabPanel value={value} index={2}>
         <Container>
             <CardOfertas/>
-            <CardOfertas2/>
+            {/* <CardOfertas2/> */}
         </Container>   
       </TabPanel>
     </Box>

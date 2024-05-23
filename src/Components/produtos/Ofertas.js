@@ -21,7 +21,7 @@ import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
 import { Share } from '@mui/icons-material';
 
 
-export default function CardOfertas() {
+export default function CardOfertas({post}) {
   
     return (
       <Card sx={{ maxWidth: 345 }} style={{marginRight: 20 + 'px'}}>
@@ -36,8 +36,8 @@ export default function CardOfertas() {
               <Share />
             </IconButton>
           }
-          title="Dragon's Dogma"
-          subheader="25 de março, 2024"
+          title={post.Title}
+          subheader={post.date}
         />
         <CardMedia
           component="img"
@@ -48,11 +48,11 @@ export default function CardOfertas() {
         <CardContent>
           <Typography variant="body2" color="text.secondary">
             <Container>
-                <PrecoAnterior color='white'>R$ 339</PrecoAnterior>
-                <Texto size='20px' color= 'Green'>R$ 250</Texto>
+                <PrecoAnterior color='white'>R$ {post.OldPrice}</PrecoAnterior>
+                <Texto size='20px' color= 'Green'>R$ {post.NewPrice}</Texto>
             </Container>            
-            Dragon's Dogma 2 Plataforma: Steam
-            <Texto color='#00A8FF'>Link: http://ww.placeholder.com</Texto>
+            {post.Title} Plataforma: {post.platform?.Name || 'N/A'}
+            <Texto color='#00A8FF'>Link: {post.Link}</Texto>
           </Typography>
         </CardContent>
         <CardActions disableSpacing>

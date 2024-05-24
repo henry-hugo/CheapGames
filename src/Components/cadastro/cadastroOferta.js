@@ -188,7 +188,7 @@ function CadastroOferta() {
                       label="Jogo"
                       id="filled-start-adornment"
                       variant="filled"
-                      name='nome'
+                      name='Title'
                       onChange={handleChange}
                       />
 
@@ -196,7 +196,7 @@ function CadastroOferta() {
                       label="Link"
                       id="filled-start-adornment"
                       variant="filled"
-                      name='link'
+                      name='Link'
                       onChange={handleChange}
                       />
                     </div>
@@ -208,6 +208,8 @@ function CadastroOferta() {
                           id="filled-adornment-amount"
                           startAdornment={<InputAdornment position="start">$</InputAdornment>}
                           type='number'
+                          name='OldPrice'
+                          onChange={handleChange}
                         />
                       </FormControl>
 
@@ -217,6 +219,8 @@ function CadastroOferta() {
                         id="filled-adornment-amount"
                         startAdornment={<InputAdornment position="start">$</InputAdornment>}
                         type='number'
+                        name='NewPrice'
+                        onChange={handleChange}
                       />
                     </FormControl>
 
@@ -231,7 +235,7 @@ function CadastroOferta() {
                       variant="filled"
                       >
                       {categorias.map((option) => (
-                        <MenuItem key={option.CategoriaID} value={option.CategoriaID}>
+                        <MenuItem key={option.CategoriaID} value={option.CategoriaID} onChange={handleChange} name='CategoryID'>
                           {option.Name}
                         </MenuItem>
                       ))}
@@ -244,7 +248,7 @@ function CadastroOferta() {
                       variant="filled"
                       >
                       {plataformas.map((option) => (
-                        <MenuItem key={option.PlataformaID} value={option.PlataformaID}>
+                        <MenuItem key={option.PlataformaID} value={option.PlataformaID} onChange={handleChange} name='PlatformID'>
                           {option.Name}
                         </MenuItem>
                       ))}
@@ -259,6 +263,8 @@ function CadastroOferta() {
                     sx={{ m: 1, width: '51ch'}}
                     placeholder='Descreva aqui como os gamers podem aproveitar sua oferta!'
                     variant="filled"
+                    name='Description'
+                    onChange={handleChange}
                   />            
                 </Box>
 
@@ -273,7 +279,10 @@ function CadastroOferta() {
                   sx={{ marginRight: 10 + 'px'}}
                   >
                     Capa do jogo
-                    <VisuallyHiddenInput type="file" />
+                    <VisuallyHiddenInput 
+                          type="file"
+                          name='ImageURL'
+                          onChange={handleChange}/>
                   </Button>       
                   
                   <Button variant="contained" endIcon={<SendIcon />} color='success' type="submit">

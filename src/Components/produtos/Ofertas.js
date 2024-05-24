@@ -44,7 +44,7 @@ export default function CardOfertas({post}) {
           component="img"
           height="194"
           image={imageURL}
-          alt="Paella dish"
+          alt={'Capa do jogo '+ post.Title}
         />
         <CardContent>
           <Typography variant="body2" color="text.secondary">

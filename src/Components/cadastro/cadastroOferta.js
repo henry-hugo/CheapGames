@@ -42,7 +42,8 @@ function CadastroOferta() {
   // 'Link' => 'nullable|url',
 
     const url = 'http://127.0.0.1:8000/api';
-    
+    const userId = sessionStorage.getItem('UserID');
+
     const[plataformas, setPlataformas] = useState([]);
     const[categorias, setCategorias] = useState([]);
     const [formData, setFormData] = useState({
@@ -50,12 +51,13 @@ function CadastroOferta() {
       NewPrice: 0,
       OldPrice: 0,
       Description: '',
-      CategoryID: 0,
-      PlatformID: 0,
-      Date: '',
+      CategoryID: '',
+      PlatformID: '',
+      Date: dayjs().format('YYYY-MM-DD'),
       Link: '',
-      Active: true,
-      UserID: 0
+      Active: 1,
+      UserID: userId,
+      ImageURL: null
     });
 
     const token = sessionStorage.getItem('token');
@@ -129,19 +131,27 @@ function CadastroOferta() {
         const { name, value } = event.target;
         setFormData({ ...formData, [name]: value });
       };
+      const handleFileChange = (event) => {
+        setFormData({ ...formData, ImageURL: event.target.files[0] });
+      };
     
       const handleSubmit = async (event) => {
         event.preventDefault();
+        
         let formDataToSend = new FormData();
         for (const key in formData) {
-          formDataToSend.append(key, formData[key]);
+          if (key !== 'ImageURL' || formData[key]) { // Exclua ImageURL se não houver arquivo
+            formDataToSend.append(key, formData[key]);
+          }
+          // formDataToSend.append(key, formData[key]);
         }
-       
+        for (const [name, value] of formDataToSend.entries()) {
+          console.log(`${name}: ${value}`);
+        }
         try {
           const response = await fetch(`${url}/post`, {
             method: 'POST',
             headers: {
-              'Content-Type': 'application/json',
               'Authorization': `Bearer ${token}`
             },
             body: formDataToSend
@@ -150,19 +160,19 @@ function CadastroOferta() {
           if (!response.ok) {
             throw new Error('Erro ao cadastrar usuário');
           }
-    
+          console.log(response);          
           // Limpar o formulário após o envio bem-sucedido
-          setFormData({
-            nome: '',
-            precoAtual: 0,
-            precoAntigo: 0,
-            descricao: '',
-            categoria: '',
-            plataforma: '',
-            link: '',
-          });
+          // setFormData({
+          //   nome: '',
+          //   precoAtual: 0,
+          //   precoAntigo: 0,
+          //   descricao: '',
+          //   categoria: '',
+          //   plataforma: '',
+          //   link: '',
+          // });
     
-          alert('Oferta postada com sucesso, obrigado por ajudar nossa comunidade!');
+          // alert('Oferta postada com sucesso, obrigado por ajudar nossa comunidade!');
         } catch (error) {
           console.error('Erro:', error);
           alert('Erro ao cadastrar usuário. Por favor, tente novamente.');
@@ -172,7 +182,7 @@ function CadastroOferta() {
     return(
       <>
         {token?(
-          <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
+          <form style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}} onSubmit={handleSubmit}>
                 <Titulo color='white' size='32px' >Poste uma oferta!</Titulo>
                 <Box component="form"
                   sx={{
@@ -180,7 +190,7 @@ function CadastroOferta() {
                   }}
                   noValidate
                   autoComplete="off"
-                  onSubmit={handleSubmit}>  
+                  >  
                   <Box sx={{'& .MuiTextField-root': { m: 1, width: '25ch' }}}>     
                   
                     <div>
@@ -233,9 +243,10 @@ function CadastroOferta() {
                       label="Categoria"
                       helperText=""
                       variant="filled"
+                      onChange={handleChange} name='CategoryID'
                       >
                       {categorias.map((option) => (
-                        <MenuItem key={option.CategoriaID} value={option.CategoriaID} onChange={handleChange} name='CategoryID'>
+                        <MenuItem key={option.CategoriaID} value={option.CategoriaID} >
                           {option.Name}
                         </MenuItem>
                       ))}
@@ -246,9 +257,11 @@ function CadastroOferta() {
                       label="Plataforma"
                       helperText=""
                       variant="filled"
+                      onChange={handleChange}
+                      name='PlatformID'
                       >
                       {plataformas.map((option) => (
-                        <MenuItem key={option.PlataformaID} value={option.PlataformaID} onChange={handleChange} name='PlatformID'>
+                        <MenuItem key={option.PlataformaID} value={option.PlataformaID}  >
                           {option.Name}
                         </MenuItem>
                       ))}
@@ -282,7 +295,7 @@ function CadastroOferta() {
                     <VisuallyHiddenInput 
                           type="file"
                           name='ImageURL'
-                          onChange={handleChange}/>
+                          onChange={handleFileChange}/>
                   </Button>       
                   
                   <Button variant="contained" endIcon={<SendIcon />} color='success' type="submit">
@@ -291,7 +304,7 @@ function CadastroOferta() {
 
                 </div>
 
-          </div>) : (<div>Entre no login: </div>)}
+          </form>) : (<div>Entre no login: </div>)}
         </>  
     );
 };

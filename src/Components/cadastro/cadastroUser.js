@@ -65,9 +65,8 @@ function CadastroUser() {
             },
             body: JSON.stringify(formData)
           });
-    
+          
           if (!response.ok) {
-            alert("aaaaa")
             throw new Error('Erro ao cadastrar usuário');
           }
           console.log(JSON.stringify(formData))

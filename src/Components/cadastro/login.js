@@ -29,13 +29,19 @@ function Login() {
     const [showPassword, setShowPassword] = React.useState(false);
     const navigate = useNavigate();
 
+    // Define o tempo em milissegundos (por exemplo, 1 minuto = 60 segundos * 1000 milissegundos)
+    const tempoEmMilissegundos = 3600000/2; // 1 hora
+    
+
     const handleClickShowPassword = () => setShowPassword((show) => !show);
   
     const handleMouseDownPassword = (event) => {
       event.preventDefault();
     };
 
-    const [value, setValue] = React.useState(dayjs('2010-05-17'));
+    const [value, setValue] = useState(dayjs('2010-05-17'));
+
+    
 
     const [formData, setFormData] = useState({        
         Email: '',
@@ -65,8 +71,11 @@ function Login() {
           const data = await response.json();
           // console.log(data);
           sessionStorage.setItem('token', data.token);
+          
+
+          
           sessionStorage.setItem('UserID', data.UserID);
-          // localStorage.setItem('name', data.name);
+          
           // Limpar o formulário após o envio bem-sucedido
           setFormData({           
             Email: '',
@@ -74,7 +83,7 @@ function Login() {
           });
           navigate('/')
           
-          // alert('Usuário cadastrado com sucesso!');
+          
         } catch (error) {
           console.error('Erro:', error);
           alert('Erro ao cadastrar usuário. Por favor, tente novamente.');

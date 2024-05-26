@@ -44,7 +44,7 @@ function a11yProps(index) {
 }
 
 export default function VerticalTabs() {
-  const [value, setValue] = React.useState(0);
+  const [value, setValue] = useState(0);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -70,6 +70,8 @@ export default function VerticalTabs() {
 
     fetchPosts();
   }, []);
+
+  
 
   return (
     <Box

@@ -13,14 +13,18 @@ const Logout = () =>{
                         'Authorization': `Bearer ${token}`
                     }
                 });
-
+                if(response.status === 500){
+                    sessionStorage.clear();
+                    navigate('/login');
+                    throw new Error('Erro de autorização', response.status);
+                }
                 if (!response.ok) {
                     throw new Error('Erro ao deslogar');
                 }
 
                 const data = await response.json();
                 console.log(data); // Verifique a resposta do logout
-                sessionStorage.removeItem('token');
+                sessionStorage.clear();
                 navigate('/');
             } catch (error) {
                 console.error('Erro ao deslogar:', error);

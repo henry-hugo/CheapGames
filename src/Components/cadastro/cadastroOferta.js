@@ -80,9 +80,15 @@ function CadastroOferta() {
           
           const data = await response.json();
           const categoriasArray = Object.values(data.category);
-         
-          if (data.ok) {
-            throw new Error('Erro ao buscar os dados');
+          
+          if(response.status === 500){
+            sessionStorage.clear();
+            navigate('/login');
+            throw new Error('Erro de autorização', response.status);
+          }
+
+          if (!response.ok) {
+            throw new Error('Erro ao buscar os dados. Status HTTP: ' + response.status);
           }
          
           setCategorias(categoriasArray);
@@ -97,11 +103,16 @@ function CadastroOferta() {
           const response = await fetch(`${url}/plataforma`);
           
           const data = await response.json();
-         
-          if (data.ok) {
-            throw new Error('Erro ao buscar os dados');
+          
+          if(response.status === 500){
+            sessionStorage.clear();
+            navigate('/login');
+            throw new Error('Erro de autorização', response.status);
           }
-         
+
+          if (!response.ok) {
+            throw new Error('Erro ao buscar os dados. Status HTTP: ' + response.status);
+          }
           setPlataformas(data.platform);
           
         } catch (error) {
@@ -114,18 +125,7 @@ function CadastroOferta() {
       fetchPlataformas();
     }, []);
 
-    // const [formData, setFormData] = useState({
-    //     Title: '',
-    //     NewPrice: 0,
-    //     OldPrice: 0,
-    //     Description: '',
-    //     CategoryID: 0,
-    //     PlatformID: 0,
-    //     Date: dayjs(),
-    //     Link: '',
-    //     Active: true,
-    //     UserID: 0
-    //   });
+    
     
       const handleChange = (event) => {
         const { name, value } = event.target;
@@ -156,26 +156,36 @@ function CadastroOferta() {
             },
             body: formDataToSend
           });
-    
+
+          if(response.status === 500){
+            sessionStorage.clear();
+            navigate('/login');
+            throw new Error('Erro de autorização', response.status);
+          }
+
           if (!response.ok) {
-            throw new Error('Erro ao cadastrar usuário');
+            throw new Error('Erro ao cadastrar oferta');
           }
           console.log(response);          
           // Limpar o formulário após o envio bem-sucedido
-          // setFormData({
-          //   nome: '',
-          //   precoAtual: 0,
-          //   precoAntigo: 0,
-          //   descricao: '',
-          //   categoria: '',
-          //   plataforma: '',
-          //   link: '',
-          // });
+           setFormData({
+              Title: '',
+              NewPrice: 0,
+              OldPrice: 0,
+              Description: '',
+              CategoryID: '',
+              PlatformID: '',
+              Date: dayjs().format('YYYY-MM-DD'),
+              Link: '',
+              Active: 1,
+              UserID: userId,
+              ImageURL: null
+          });
     
           // alert('Oferta postada com sucesso, obrigado por ajudar nossa comunidade!');
         } catch (error) {
           console.error('Erro:', error);
-          alert('Erro ao cadastrar usuário. Por favor, tente novamente.');
+          alert('Erro ao cadastrar oferta. Por favor, tente novamente.');
         }
     };
 

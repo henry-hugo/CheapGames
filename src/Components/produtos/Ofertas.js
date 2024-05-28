@@ -23,6 +23,7 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 import dayjs from 'dayjs';
 import { useNavigate } from 'react-router-dom';
+import '../styles/main.css';
 
 //Quebrado quando tem mais de uma informação ele também tira o menu lateral
 export default function CardOfertas({post}) {
@@ -140,11 +141,11 @@ export default function CardOfertas({post}) {
       return groupedByPostID[postID].filter(rating => rating.Liked === value).length;
     };
     return (
-      <Card sx={{ maxWidth: 345 }} style={{marginRight: 20 + 'px'}}>
+      <Card sx={{ maxWidth: 345 }} style={{marginRight: 20 + 'px'}} className='card'>
         <CardHeader
           avatar={
             <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-              R
+              ?
             </Avatar>
           }
           action={
@@ -160,6 +161,7 @@ export default function CardOfertas({post}) {
           height="194"
           image={imageURL}
           alt={'Capa do jogo '+ post.Title}
+          className='postImage'
         />
         <CardContent>
           <Typography variant="body2" color="text.secondary">

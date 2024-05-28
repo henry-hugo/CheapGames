@@ -58,11 +58,7 @@ export default function Ranks() {
       try {
         const response = await fetch('http://127.0.0.1:8000/api/post/');
         const data = await response.json();
-        if(response.status === 500){
-          sessionStorage.clear();
-          navigate('/login');
-          throw new Error('Erro de autorização', response.status);
-        }
+       
         if (data.status !== 200) {
           throw new Error('Erro ao buscar os dados');
         }

@@ -8,10 +8,10 @@ import CardOfertas from '../produtos/Ofertas';
 import CardOfertas2 from '../produtos/CardPlaceHolder';
 import { Container } from '../styles/Containers';
 import { useState, useEffect } from 'react';
-
+import '../styles/main.css';
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
-  let token = sessionStorage.getItem('token');
+
 
   return (
     <div
@@ -84,34 +84,37 @@ export default function VerticalTabs() {
         onChange={handleChange}
         aria-label="Vertical tabs example"
         sx={{ borderRight: 1, borderColor: 'divider' }}
+        className='tab-panel'
       >
-        <Tab label="Destaques" {...a11yProps(0)} />
-        <Tab label="Recentes" {...a11yProps(1)} />
-        <Tab label="Menor preço" {...a11yProps(2)} />
+        <Tab label="Destaques" {...a11yProps(0)}  className='tabs'/>
+        <Tab label="Recentes" {...a11yProps(1)}  className='tabs'/>
+        <Tab label="Menor preço" {...a11yProps(2)}  className='tabs'/>
         
       </Tabs>
       
       <TabPanel value={value} index={0} style={{display: 'flex'}}>
-        <Container>
+        <Container className='container'>
           {posts.map(post => (
             <CardOfertas key={post.PostID} post={post} />
           ))}
-            {/* <CardOfertas/> */}
-            {/* <CardOfertas2/> */}
+            
         </Container>          
       </TabPanel>
       <TabPanel value={value} index={1}>
-        {posts.map(post => (
-            <CardOfertas key={post.PostID} post={post} />// esse aqui fica um em baixo do outro 
-          ))}
+        <Container className='container'>
+          {posts.map(post => (
+              <CardOfertas key={post.PostID} post={post} />// esse aqui fica um em baixo do outro 
+            ))}
+          </Container>
       </TabPanel>
       <TabPanel value={value} index={2}>
-        <Container>
+        <Container className='container'>
             {posts.map(post => (
             <CardOfertas key={post.PostID} post={post} />
           ))}
-            {/* <CardOfertas2/> */}
-        </Container>   
+        </Container>
+            
+          
       </TabPanel>
     </Box>
   );

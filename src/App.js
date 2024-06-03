@@ -12,6 +12,7 @@ import Ranks from './Components/produtos/Ranks';
 import Logout from './Components/logout/logout';
 import './Components/styles/main.css';
 import Perfil from './Components/perfil/perfil';
+import { useEffect } from 'react';
 
 const darkTheme = createTheme({
   palette: {
@@ -22,6 +23,9 @@ const darkTheme = createTheme({
 
 
 function App() {
+  useEffect(() => {
+    document.title = 'CheapGames'
+  })
   return (
     <ThemeProvider theme={darkTheme} className='theme-provider'>
     <ResponsiveAppBar/>

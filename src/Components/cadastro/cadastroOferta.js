@@ -41,7 +41,7 @@ function CadastroOferta() {
   // 'OldPrice' => 'required|numeric',
   // 'Link' => 'nullable|url',
 
-    const url = 'http://127.0.0.1:8000/api';
+    const url = 'https://cheapgames-i2xd74yl7a-uc.a.run.app/api';
     const userId = sessionStorage.getItem('UserID');
 
     const[plataformas, setPlataformas] = useState([]);
@@ -181,11 +181,11 @@ function CadastroOferta() {
               UserID: userId,
               ImageURL: null
           });
-    
-          // alert('Oferta postada com sucesso, obrigado por ajudar nossa comunidade!');
+          navigate('/');
+          
         } catch (error) {
           console.error('Erro:', error);
-          alert('Erro ao cadastrar oferta. Por favor, tente novamente.');
+          
         }
     };
 

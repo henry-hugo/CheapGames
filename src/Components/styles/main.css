@@ -7,15 +7,62 @@
     width: 250px;
     height: 600px;
     max-height: 600px;
+    text-align: center;
 }
 .container{
-    display: flex;
+    /* display: flex;
     flex-wrap: wrap;
+    
+   
+    max-height: 100%;
+    overflow: auto; */
+    display: grid;
+    grid-template: repeat(3, 1fr) / repeat(3, 1fr);
+    flex-wrap: wrap;
+    width: 1300px!important;
+    gap: 20px 5px;
     justify-content: flex-start!important;
     margin-left: 50px;
-    max-height: 100%;
-    overflow: auto;
     
+}
+.container > *{
+    
+    /* border: 1px solid green;
+    background-color: lime; */
+    flex: 1 1 auto;
+    width: 400px;
+    height: 550px;
+    max-height: 550px;
+    max-width: 400px;
+    
+}
+.link > a{
+    color: #00A8FF;
+    text-decoration: none;
+    max-width: 250px;
+    
+}
+.link{
+    text-overflow: ellipsis; 
+    overflow: hidden;
+    width: 300px;
+    text-align: center;
+    max-height: 20px;
+}
+.container-likes{
+    display: flex;
+    justify-content: center;
+    align-items: end;
+    
+    
+}
+.title{
+    text-overflow: ellipsis; 
+    overflow: hidden;
+    width: 300px;
+    text-align: center;
+    max-height: 20px;
+    margin: 5px!important;
 }
 .tab-panel{
     width: 250px;
@@ -23,4 +70,50 @@
 .tabs{
     padding: 24px 28px!important;
 }
-
+.message{
+    text-align: center;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.message-like{
+    margin-top: 20px;
+}
+.container-profile{
+    text-align: justify;
+    display: flex;
+    flex-direction: column;
+    width: 500px;
+    margin: 0 auto;
+    margin-top: 150px;
+    border: #ccc solid 2px;
+    height: 400px;
+    justify-content: center;
+    align-items: center;
+}
+.container-profile h1{
+    font-size: 32px;
+    
+}
+.container-profile p{
+    font-size: 20px;
+    
+}
+.email{
+    padding-left: 60px;
+}
+.pontuacao{
+    width: 180px;
+}
+.nome-perfil{
+    display: flex;
+    align-items: center;
+    
+}
+.nome-perfil h1 {
+    padding-left: 10px;
+} 
+.avatar-profile{
+    margin-top: 4.5px;
+}

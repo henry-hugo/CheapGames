@@ -23,27 +23,30 @@ import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DateField } from '@mui/x-date-pickers/DateField';
+import { useNavigate } from 'react-router-dom';
 
 function CadastroUser() {
-    const [showPassword, setShowPassword] = React.useState(false);
+    const [showPassword, setShowPassword] = useState(false);
   
     const handleClickShowPassword = () => setShowPassword((show) => !show);
+
+    const navigate = useNavigate();
   
     const handleMouseDownPassword = (event) => {
       event.preventDefault();
     };
 
-    const [value, setValue] = React.useState(dayjs('2010-05-17'));
+    const [value, setValue] = useState(dayjs(''));
   
     const [formData, setFormData] = useState({
         Username: '',
         Email: '',
         Password: '',
         Credit:0,
-        Date: dayjs(),
-        CPF: '',
-        Active:true
+        Date: dayjs(value.toString()).format('YYYY-MM-DD'),
+        CPF: ''
       });
+      const [date, setDate] = useState('');
     
       const handleChange = (event) => {
         const { name, value } = event.target;
@@ -53,12 +56,27 @@ function CadastroUser() {
           [name]: value,
         }));
       };
-    
+      const handleDateChange = (newDate) => {
+        // console.log(newDate)
+        setValue(newDate);
+        const aaa = value.toString();
+        const bbb = dayjs(aaa).format('YYYY-MM-DD');
+        setFormData((prevFormData) => ({
+            ...prevFormData,
+            Date: dayjs(value.toString()).format('YYYY-MM-DD'),
+        }));
+        // console.log(formData.Date, ' data')
+      };
       const handleSubmit = async (event) => {
         event.preventDefault();
         
+        // console.log(bbb);
+        
+        // console.log(formData.Date)
         try {
-          const response = await fetch('http://127.0.0.1:8000/api/usuario', {
+          // const response = await fetch('http://127.0.0.1:8000/api/usuario');
+          // const response = await fetch('https://cheapgames-i2xd74yl7a-uc.a.run.app/api/usuario');
+          const response = await fetch('https://cheapgames-i2xd74yl7a-uc.a.run.app/api/usuario', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json'
@@ -70,22 +88,23 @@ function CadastroUser() {
             throw new Error('Erro ao cadastrar usuário');
           }
           console.log(JSON.stringify(formData))
+          setValue(dayjs(''));
           // Limpar o formulário após o envio bem-sucedido
           setFormData({
             Username: '',
             Email: '',
             Password: '',
             Credit:0,
-            Date: dayjs(),
-            CPF: '',
-            Active:true
+            Date: dayjs(value.toString()).format('YYYY-MM-DD'),
+            CPF: ''
           });
-    
-          alert('Usuário cadastrado com sucesso!');
+          navigate('/login');
+          
         } catch (error) {
           console.error('Erro:', error);
-          alert('Erro ao cadastrar usuário. Por favor, tente novamente.');
+          
         }
+        
     };
 
     return(
@@ -108,17 +127,28 @@ function CadastroUser() {
               value={formData.Username}
               onChange={handleChange}
               />
-              <LocalizationProvider dateAdapter={AdapterDayjs}>
+              {/* <LocalizationProvider dateAdapter={AdapterDayjs}>
                   <DateField
-                  label="Data"
+                  label="Data de nascimento"
                   variant="filled"
                   format="DD-MM-YYYY"
                   name='Date'
                   value={formData.Date}
                   onChange={handleChange}
                   sx={{ m: 1, width: '25ch' }}
-                  readOnly
+                  
                   />
+              </LocalizationProvider> */}
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <DateField
+                        label="Data de nascimento"
+                        variant="filled"
+                        format="DD-MM-YYYY"
+                        value={value}
+                        onChange={handleDateChange} // Usa a função específica para alterar a data
+                        sx={{ m: 1, width: '25ch' }}
+                        name='Date'
+                    />
               </LocalizationProvider>
         
               <TextField

@@ -29,9 +29,10 @@ function Login() {
     const [showPassword, setShowPassword] = React.useState(false);
     const navigate = useNavigate();
 
-    // Define o tempo em milissegundos (por exemplo, 1 minuto = 60 segundos * 1000 milissegundos)
-    const tempoEmMilissegundos = 3600000/2; // 1 hora
-    
+    const token = sessionStorage.getItem('token');
+    if(token){
+      navigate('/');
+    }
 
     const handleClickShowPassword = () => setShowPassword((show) => !show);
   
@@ -57,7 +58,7 @@ function Login() {
         event.preventDefault();
         
         try {
-          const response = await fetch('http://127.0.0.1:8000/api/login', {
+          const response = await fetch('https://cheapgames-i2xd74yl7a-uc.a.run.app/api/login', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json'
@@ -86,7 +87,7 @@ function Login() {
           
         } catch (error) {
           console.error('Erro:', error);
-          alert('Erro ao cadastrar usuário. Por favor, tente novamente.');
+          
         }
     };
 

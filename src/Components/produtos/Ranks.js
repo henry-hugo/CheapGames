@@ -12,7 +12,7 @@ import { yellow } from '@mui/material/colors';
 import EmojiEventsTwoToneIcon from '@mui/icons-material/EmojiEventsTwoTone';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-
+import '../styles/main.css';
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
     backgroundColor: theme.palette.common.black,
@@ -33,21 +33,13 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-function createData(name, calories, fat, carbs, protein) {
-  return { name, calories, fat, carbs, protein };
-}
-const rows = [
-  createData('Vanna', '#1', 30, 44, 2),
-  createData('Gustavo', '#2', 25, 42, 3),
-  createData('Rodrigo', '#3', 15, 36, 5),
-  createData('Hugo', '#4', 12, 25, 4),
-  createData('Quintas', '#5', 10, 21, 3),
-];
 
 export default function Ranks() {
   const [posts, setPosts] = useState([]);
   const [userNames, setUserNames] = useState({});
   const token = sessionStorage.getItem('token');
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
     
   
   const navigate = useNavigate();
@@ -56,7 +48,7 @@ export default function Ranks() {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const response = await fetch('http://127.0.0.1:8000/api/post/');
+        const response = await fetch('https://cheapgames-i2xd74yl7a-uc.a.run.app/api/post/');
         const data = await response.json();
        
         if (data.status !== 200) {
@@ -71,6 +63,7 @@ export default function Ranks() {
     };
 
     fetchPosts();
+    
   }, []);
   
 
@@ -78,7 +71,7 @@ export default function Ranks() {
     const fetchUserNames = async () => {
       const names = {};      
       try {
-        const response = await fetch(`http://127.0.0.1:8000/api/usuario`, {
+        const response = await fetch(`https://cheapgames-i2xd74yl7a-uc.a.run.app/api/usuario`, {
           method: 'GET',
           headers: {
             'Authorization': `Bearer ${token}`
@@ -91,6 +84,7 @@ export default function Ranks() {
             console.log(user.Username)
           });
           setUserNames(names);
+          setLoading(false);
         } else if(response.status === 500){
           sessionStorage.clear();
           navigate('/login');
@@ -100,12 +94,15 @@ export default function Ranks() {
         }
       } catch (error) {
         console.error('Erro ao buscar nomes de usuários:', error);
+        setError(error);
+        setLoading(false);
       }
       
       
     };
 
     fetchUserNames();
+    
   }, [token]);
 
   
@@ -126,7 +123,15 @@ export default function Ranks() {
 
   // Ordena o array em ordem decrescente com base nas contagens
   userIDStatsArray.sort((a, b) => (b[1].likes - b[1].dislikes) - (a[1].likes - a[1].dislikes));
-  // console.log(userIDStatsArray)
+  
+  if (loading) {
+    return <div className='message'>Carregando...</div>;
+  }
+
+  if (error) {
+    return <div className='message'>Erro: {error.message}</div>;
+  }
+
   return (
     <div>
         <Titulo color='white' style={{display: 'flex', justifyContent: 'center', marginTop: 30 + 'px'}}><EmojiEventsTwoToneIcon fontSize="large" sx={{ color: yellow[400], marginRight: 10 + 'px' }}/>  Rank dos melhores contribuintes <EmojiEventsTwoToneIcon fontSize="large" sx={{ color: yellow[400],  marginLeft: 10 + 'px'}} /></Titulo>

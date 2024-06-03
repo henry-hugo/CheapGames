@@ -14,12 +14,13 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import InputBase from '@mui/material/InputBase';
-import SearchIcon from '@mui/icons-material/Search';
+// import SearchIcon from '@mui/icons-material/Search';
 import Fab from '@mui/material/Fab';
 import AddIcon from '@mui/icons-material/Add';
-import MailIcon from '@mui/icons-material/Mail';
-import NotificationsIcon from '@mui/icons-material/Notifications';
-import Badge from '@mui/material/Badge';
+import Logo from '../../images/joystick.svg';
+// import MailIcon from '@mui/icons-material/Mail';
+// import NotificationsIcon from '@mui/icons-material/Notifications';
+// import Badge from '@mui/material/Badge';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -65,18 +66,16 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 const pages = [
   { nome: 'Ofertas', url: '/cadastroOferta' },
-  { nome: 'Plataformas', url: '/' },
+  { nome: 'Postagens', url: '/' },
   { nome: 'Ranks', url: '/Ranks'}
 ];
 
 const settings = [
     { nome: 'Cadastrar', url: '/cadastroUser' },
-    { nome: 'Login', url: '/login' },
-    { nome: 'Configurações', url: '/configuracoes' }
+    { nome: 'Login', url: '/login' }
 ];
 const settingsLogin = [
     { nome: 'Perfil', url: '/perfil' },
-    { nome: 'Configurações', url: '/configuracoes' },
     { nome: 'Logout', url: '/logout' }
 ]
 
@@ -106,7 +105,8 @@ function ResponsiveAppBar() {
         <AppBar position="static">
         <Container maxWidth="xl">
             <Toolbar disableGutters >
-            <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }}/>
+            {/* <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }}/> */}
+            <img src={Logo} style={{height: 40 + 'px', alignSelf: 'start', paddingTop: 7 +'px',marginRight: 5+'px'}}/>
             <Typography
                 variant="h6"
                 noWrap
@@ -123,7 +123,7 @@ function ResponsiveAppBar() {
                 
                 }}
             >
-                LOGO
+                CheapGames
             </Typography>
 
             <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -198,7 +198,7 @@ function ResponsiveAppBar() {
                 ))}
                 
             </Box>
-            <Search >
+            {/* <Search >
                 <SearchIconWrapper>
                     <SearchIcon />
                 </SearchIconWrapper>
@@ -206,7 +206,7 @@ function ResponsiveAppBar() {
                 placeholder="Search…"
                 inputProps={{ 'aria-label': 'search' }}
                 />
-            </Search>
+            </Search> */}
             {/* <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
                 <IconButton size="large" aria-label="show 4 new mails" color="inherit">
                 <Badge badgeContent={4} color="error">
@@ -229,7 +229,8 @@ function ResponsiveAppBar() {
                 </Fab>
                 <Tooltip title="Open settings">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                    <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                    {/* <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" /> */}
+                    <Avatar sx={{ bgcolor: '#f5f5f5'[500] }}></Avatar>
                 </IconButton>
                 </Tooltip>
                 <Menu

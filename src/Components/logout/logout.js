@@ -6,7 +6,7 @@ const Logout = () =>{
     useEffect(() => {
         const logout = async () => {
             try {
-                const response = await fetch('http://127.0.0.1:8000/api/logout', {
+                const response = await fetch('https://cheapgames-i2xd74yl7a-uc.a.run.app/api/logout', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
